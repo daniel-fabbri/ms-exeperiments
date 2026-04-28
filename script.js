@@ -37,4 +37,22 @@
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 600);
   }
+
+  // Hide the loading overlay once the page is fully rendered. We wait for
+  // window.load (CSS, images, fonts ready) plus a short grace period so the
+  // dynamically-injected components have time to settle, eliminating the
+  // "broken layout flash".
+  function hideLoader() {
+    const loader = document.getElementById('exp-loader');
+    if (!loader) return;
+    loader.classList.add('hide');
+    setTimeout(() => loader.remove(), 350);
+  }
+  if (document.readyState === 'complete') {
+    setTimeout(hideLoader, 250);
+  } else {
+    window.addEventListener('load', () => setTimeout(hideLoader, 250));
+  }
+  // Safety net: never leave the loader on screen for more than 4s.
+  setTimeout(hideLoader, 4000);
 })();
