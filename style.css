@@ -2,6 +2,9 @@
    Experiment shell styles — header, sidebar, Ask-AI card, variant rules
    ===================================================================== */
 
+/* Kill horizontal scrollbar across the page. */
+html, body { overflow-x: hidden; max-width: 100%; }
+
 /* ---------- Simple Microsoft-style header ---------- */
 #simple-header {
   position: sticky; top: 0; z-index: 1000;
@@ -26,52 +29,32 @@
 /* Hide original microsoft.com header / promo banner */
 uhf-header, uhf-promo-banner { display: none !important; }
 
-/* ---------- Experiment sidebar (pure-CSS toggle via checkbox) ---------- */
-#exp-sidebar-toggle { position: absolute; opacity: 0; pointer-events: none; }
+/* ---------- Header account menu (shown after login) ---------- */
+#sh-account { position: relative; margin-left: auto; }
+#sh-account-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; border: 1px solid transparent; border-radius: 6px;
+  padding: 4px 10px 4px 6px; cursor: pointer;
+  font: inherit; color: #1a1a1a;
+}
+#sh-account-btn:hover { background: #f3f3f3; border-color: #e5e5e5; }
+#sh-account-btn[aria-expanded="true"] { background: #f3f3f3; border-color: #d1d1d1; }
+#sh-account-btn .sh-account-icon { color: #1a1a1a; }
+#sh-account-btn #sh-account-name { font-weight: 600; font-size: 13px; }
+#sh-account-btn .sh-account-caret { color: #666; }
 
-#exp-toggle {
-  position: fixed; top: 50%; left: 0; transform: translateY(-50%);
-  width: 36px; height: 48px; z-index: 100001;
-  background: #0078D4; color: #fff;
-  border-radius: 0 6px 6px 0; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-  transition: left 0.25s ease;
+#sh-account-menu {
+  position: absolute; top: calc(100% + 4px); right: 0;
+  background: #fff; border: 1px solid #e5e5e5; border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  min-width: 140px; padding: 4px; z-index: 1500;
 }
-#exp-toggle:hover { background: #106ebe; }
-
-#exp-sidebar {
-  position: fixed; top: 0; left: 0; height: 100vh; width: 280px;
-  background: #fff; color: #1a1a1a;
-  border-right: 1px solid #e5e5e5;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  padding: 20px 24px; overflow-y: auto;
-  font: 14px/1.5 "Segoe UI", system-ui, sans-serif;
-  transform: translateX(-100%); transition: transform 0.25s ease;
-  z-index: 100000;
+#sh-account-menu button {
+  display: block; width: 100%; text-align: left;
+  background: transparent; border: none; border-radius: 4px;
+  padding: 8px 12px; cursor: pointer; font: inherit; color: #1a1a1a;
 }
-#exp-sidebar-toggle:checked ~ #exp-sidebar { transform: translateX(0); }
-#exp-sidebar-toggle:checked ~ #exp-toggle { left: 280px; }
-
-#exp-sidebar h3 {
-  margin: 0 0 12px; font-size: 18px; font-weight: 600;
-  padding-bottom: 8px; border-bottom: 1px solid #eee;
-}
-#exp-sidebar h4 {
-  margin: 16px 0 8px; font-size: 13px; font-weight: 600;
-  color: #555; text-transform: uppercase; letter-spacing: 0.5px;
-}
-#exp-sidebar ul { list-style: none; padding: 0; margin: 0; }
-#exp-sidebar li { margin: 4px 0; }
-#exp-sidebar a {
-  display: block; padding: 8px 12px; border-radius: 4px;
-  color: #1a1a1a; text-decoration: none;
-  transition: background 0.15s;
-}
-#exp-sidebar a:hover { background: #f3f3f3; }
-#exp-sidebar a.active {
-  background: #0078D4; color: #fff; font-weight: 600;
-}
+#sh-account-menu button:hover { background: #f3f3f3; }
 
 /* ---------- Ask-AI card (Discover A/B/C) ---------- */
 #ask-card {
@@ -113,6 +96,31 @@ uhf-header, uhf-promo-banner { display: none !important; }
   border: 1px solid #d1d1d1; border-radius: 22px;
   padding: 6px 8px 6px 14px; background: #fafafa;
 }
+
+/* Chat transcript inside the card (Discover B/C) */
+#ask-card .ac-messages {
+  display: none;
+  margin-top: 10px;
+  max-height: 240px; overflow-y: auto;
+  padding: 4px 2px;
+  font-size: 13px; line-height: 1.4;
+}
+body[data-ref="543348v094jf34243v"] #ask-card .ac-messages.has-msgs,
+body[data-ref="8737948v25c09f4023"] #ask-card .ac-messages.has-msgs { display: block; }
+#ask-card .ac-msg {
+  margin: 6px 0; padding: 8px 10px; border-radius: 10px;
+  max-width: 85%; word-wrap: break-word; white-space: pre-wrap;
+}
+#ask-card .ac-msg.user {
+  background: #0078D4; color: #fff;
+  margin-left: auto; border-bottom-right-radius: 2px;
+}
+#ask-card .ac-msg.bot {
+  background: #f3f3f3; color: #1a1a1a;
+  margin-right: auto; border-bottom-left-radius: 2px;
+}
+#ask-card .ac-msg.bot.loading { font-style: italic; color: #666; }
+#ask-card .ac-msg.bot.error { background: #fde7e9; color: #a4262c; }
 #ask-card .ac-input {
   flex: 1; border: none; background: transparent; outline: none;
   font: inherit; color: #1a1a1a;
@@ -156,6 +164,14 @@ body[data-ref="8737948v25c09f4023"]:not([data-card-closed]) .sa-default-entry-co
 /* User dismissed the card → hide it (the pill returns automatically) */
 body[data-card-closed] #ask-card { display: none !important; }
 
+/* User clicked the "Need help? Let's chat" pill → force the card open
+   on any variant, with input + messages visible, and hide the pill. */
+body[data-chat-open] #ask-card { display: block !important; }
+body[data-chat-open] #ask-card .ac-input-row { display: flex !important; }
+body[data-chat-open] #ask-card .ac-messages.has-msgs { display: block !important; }
+body[data-chat-open] .sa-default-entry-container,
+body[data-chat-open] .sa-highlight-entry-container { display: none !important; }
+
 /* Per-variant chip groups */
 body[data-ref="9487948v094jf09f40"] #ask-card .ac-chips-a { display: flex; }
 body[data-ref="543348v094jf34243v"] #ask-card .ac-chips-b { display: flex; }
@@ -163,6 +179,11 @@ body[data-ref="543348v094jf34243v"] #ask-card .ac-chips-b { display: flex; }
 /* Per-variant input row (B and C only) */
 body[data-ref="543348v094jf34243v"] #ask-card .ac-input-row,
 body[data-ref="8737948v25c09f4023"] #ask-card .ac-input-row { display: flex; }
+
+/* Variant A: after the user clicks a chip, reveal the chat UI so the
+   conversation can continue (messages + input row). */
+body[data-ref="9487948v094jf09f40"] #ask-card.ac-engaged .ac-input-row { display: flex; }
+body[data-ref="9487948v094jf09f40"] #ask-card.ac-engaged .ac-messages.has-msgs { display: block; }
 
 /* Control chat: force the "Can we help you?" highlight popover visible
    and hide the small "Need help?" pill so only the popover appears.
@@ -188,7 +209,76 @@ body[data-ref="98fh349f8349j02d3i"] .sa-default-entry-container {
   display: none !important;
 }
 
+/* Once the user dismisses the dark popover (Chat now / No thanks), hide it
+   regardless of the variant-specific overrides above. */
+body[data-highlight-dismissed] .sa-highlight-entry-container {
+  display: none !important;
+}
+
 /* Decision module is injected dynamically by an inline script in the page.
    Hide it by default; show only on the Surface Explorer variant. */
 #exp39634 { display: none !important; }
 body[data-ref="89fh4384090230j00r"] #exp39634 { display: block !important; }
+
+/* ---------- Login modal (shown when no ?ref= is set) ---------- */
+#login-modal {
+  position: fixed; inset: 0; z-index: 200000;
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  font: 14px/1.4 "Segoe UI", system-ui, sans-serif;
+  animation: lm-fade 0.2s ease-out;
+}
+@keyframes lm-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Hide modal once the user is "logged in" (URL has ?ref=...) */
+body[data-ref] #login-modal { display: none !important; }
+
+#login-modal .lm-card {
+  background: #fff; border-radius: 14px;
+  padding: 32px 36px; width: min(520px, 92vw);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+#login-modal h2 {
+  margin: 0 0 6px; font-size: 22px; font-weight: 600; color: #1a1a1a;
+}
+#login-modal .lm-subtitle {
+  margin: 0 0 22px; color: #666; font-size: 14px;
+}
+#login-modal .lm-users {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px; margin-bottom: 24px;
+}
+@media (max-width: 520px) {
+  #login-modal .lm-users { grid-template-columns: repeat(3, 1fr); }
+}
+#login-modal .lm-user {
+  background: #fff; border: 2px solid #e5e5e5; border-radius: 10px;
+  padding: 12px 6px; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font: inherit; color: #1a1a1a;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+#login-modal .lm-user:hover { background: #f7f7f7; border-color: #c8c8c8; }
+#login-modal .lm-user.selected {
+  border-color: #0078D4; background: #f3f9ff;
+}
+#login-modal .lm-user:active { transform: scale(0.97); }
+#login-modal .lm-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 600; font-size: 16px;
+}
+#login-modal .lm-name { font-size: 13px; font-weight: 500; }
+#login-modal #lm-login {
+  background: #0078D4; color: #fff; border: none;
+  padding: 10px 32px; border-radius: 6px;
+  font: inherit; font-weight: 600; font-size: 15px;
+  cursor: pointer; transition: background 0.15s;
+}
+#login-modal #lm-login:hover:not(:disabled) { background: #106ebe; }
+#login-modal #lm-login:disabled {
+  background: #d1d1d1; color: #888; cursor: not-allowed;
+}

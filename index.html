@@ -1,4 +1,4 @@
-﻿?<html lang="en-US" dir="ltr" class="microsoft-client" style="--chat-bottom-safe-area: 0px;">
+<html lang="en-US" dir="ltr" class="microsoft-client" style="--chat-bottom-safe-area: 0px;">
 
 <head class="at-element-marker">
 
@@ -1645,7 +1645,7 @@ h6,.h6{font-family:var(--ds-heading-3xs-font-family,var(--ds-font-family-segoe-v
 
 
 <!-- ============ Experiment shell (header + sidebar + ask-ai card) ============
-     Markup is fully static; visibility is driven by body[data-ref="�"] in CSS.
+     Markup is fully static; visibility is driven by body[data-ref="..."] in CSS.
      script.js only sets that attribute and wires the close / sidebar handlers. -->
 <header id="simple-header">
   <a class="sh-brand" href="#" aria-label="Microsoft">
@@ -1666,35 +1666,71 @@ h6,.h6{font-family:var(--ds-heading-3xs-font-family,var(--ds-font-family-segoe-v
     <a href="#">Xbox</a>
     <a href="#">Support</a>
   </nav>
+  <div id="sh-account" hidden>
+    <button id="sh-account-btn" type="button" aria-haspopup="true" aria-expanded="false">
+      <svg class="sh-account-icon" width="22" height="22" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+           aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="10" r="3.2"/>
+        <path d="M5.5 19c1.4-2.8 3.9-4.2 6.5-4.2s5.1 1.4 6.5 4.2"/>
+      </svg>
+      <span id="sh-account-name"></span>
+      <svg class="sh-account-caret" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+        <path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div id="sh-account-menu" role="menu" hidden>
+      <button type="button" id="sh-logout" role="menuitem">Sair</button>
+    </div>
+  </div>
 </header>
 
-<input type="checkbox" id="exp-sidebar-toggle">
-<label id="exp-toggle" for="exp-sidebar-toggle" aria-label="Toggle experiments">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-       stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <line x1="3" y1="6"  x2="21" y2="6"/>
-    <line x1="3" y1="12" x2="21" y2="12"/>
-    <line x1="3" y1="18" x2="21" y2="18"/>
-  </svg>
-</label>
-<aside id="exp-sidebar">
-  <h3>Experiments</h3>
-  <h4>Experiment 1</h4>
-  <ul>
-    <li><a href="#" data-ref="98fh349f8349j02d3i">Control chat</a></li>
-    <li><a href="#" data-ref="9487948v094jf09f40">Discover A</a></li>
-    <li><a href="#" data-ref="543348v094jf34243v">Discover B</a></li>
-    <li><a href="#" data-ref="8737948v25c09f4023">Discover C</a></li>
-  </ul>
-  <h4>Experiment 2</h4>
-  <ul>
-    <li><a href="#" data-ref="43tgbny848v2576yuj">Control</a></li>
-    <li><a href="#" data-ref="89fh4384090230j00r">Surface Explorer</a></li>
-  </ul>
-</aside>
+<!-- Login modal: blocks the page until the user picks an identity.
+     Hidden via CSS when the URL already has ?ref=… (i.e. logged in). -->
+<div id="login-modal" role="dialog" aria-modal="true" aria-labelledby="lm-title">
+  <div class="lm-card">
+    <h2 id="lm-title">Welcome</h2>
+    <p class="lm-subtitle">Choose a user to continue</p>
+    <div class="lm-users" role="radiogroup" aria-label="User">
+      <button class="lm-user" type="button" role="radio" aria-checked="false"
+              data-ref="98fh349f8349j02d3i" data-name="Daniel">
+        <span class="lm-avatar" style="background:#0078D4">D</span>
+        <span class="lm-name">Daniel</span>
+      </button>
+      <button class="lm-user" type="button" role="radio" aria-checked="false"
+              data-ref="9487948v094jf09f40" data-name="Allison">
+        <span class="lm-avatar" style="background:#E3008C">A</span>
+        <span class="lm-name">Allison</span>
+      </button>
+      <button class="lm-user" type="button" role="radio" aria-checked="false"
+              data-ref="543348v094jf34243v" data-name="Devin">
+        <span class="lm-avatar" style="background:#107C10">D</span>
+        <span class="lm-name">Devin</span>
+      </button>
+      <button class="lm-user" type="button" role="radio" aria-checked="false"
+              data-ref="8737948v25c09f4023" data-name="Linda">
+        <span class="lm-avatar" style="background:#8661C5">L</span>
+        <span class="lm-name">Linda</span>
+      </button>
+      <button class="lm-user" type="button" role="radio" aria-checked="false"
+              data-ref="43tgbny848v2576yuj" data-name="Brent">
+        <span class="lm-avatar" style="background:#5C2D91">B</span>
+        <span class="lm-name">Brent</span>
+      </button>
+      <button class="lm-user" type="button" role="radio" aria-checked="false"
+              data-ref="89fh4384090230j00r" data-name="Yago">
+        <span class="lm-avatar" style="background:#D83B01">Y</span>
+        <span class="lm-name">Yago</span>
+      </button>
+    </div>
+    <button id="lm-login" type="button" disabled>Login</button>
+  </div>
+</div>
 
 <div id="ask-card">
-  <button class="ac-close" type="button" aria-label="Close">�</button>
+  <button class="ac-close" type="button" aria-label="Close">&times;</button>
   <div class="ac-top">
     <div class="ac-heading">How can I help you? <button class="ac-ask" type="button">Ask AI</button></div>
   </div>
@@ -1708,6 +1744,7 @@ h6,.h6{font-family:var(--ds-heading-3xs-font-family,var(--ds-font-family-segoe-v
     <button class="ac-chip" type="button">Sign in to my account</button>
     <button class="ac-chip" type="button">How can my business use Azure?</button>
   </div>
+  <div class="ac-messages" aria-live="polite"></div>
   <div class="ac-input-row">
     <input class="ac-input" type="text" placeholder="Ask me anything" aria-label="Message">
     <button class="ac-send" type="button" aria-label="Send">

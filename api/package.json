@@ -1,0 +1,13 @@
+{
+  "name": "ms-experiments-api",
+  "version": "1.0.0",
+  "description": "Static Web App managed Functions API for the experiment chat",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "start": "func start"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.5.0",
+    "@azure/identity": "^4.4.1"
+  }
+}
