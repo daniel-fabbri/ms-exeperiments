@@ -17,10 +17,11 @@
 
   const pageUrl = window.location.origin + window.location.pathname;
 
-  // Build a {ref: name} map from the modal buttons (single source of truth)
+  // Build a {ref: persona name} map from the persona <select> options.
   const users = {};
-  document.querySelectorAll('#login-modal .lm-user').forEach(b => {
-    users[b.dataset.ref] = b.dataset.name;
+  document.querySelectorAll('#lm-select option[value]').forEach(o => {
+    if (!o.value) return;
+    users[o.value] = o.textContent.trim();
   });
 
   // ---- Header account menu (visible only when logged in) ----
@@ -191,24 +192,15 @@
     });
   });
 
-  // Login modal: pick a user, then "Login" redirects to the variant URL.
+  // Login modal: pick a persona from the select, then "Login" redirects.
   if (!ref) {
-    const userBtns = document.querySelectorAll('#login-modal .lm-user');
+    const select = document.getElementById('lm-select');
     const loginBtn = document.getElementById('lm-login');
-    let selectedRef = null;
-    userBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        userBtns.forEach(b => {
-          b.classList.remove('selected');
-          b.setAttribute('aria-checked', 'false');
-        });
-        btn.classList.add('selected');
-        btn.setAttribute('aria-checked', 'true');
-        selectedRef = btn.dataset.ref;
-        if (loginBtn) loginBtn.disabled = false;
-      });
+    if (select) select.addEventListener('change', () => {
+      if (loginBtn) loginBtn.disabled = !select.value;
     });
     if (loginBtn) loginBtn.addEventListener('click', () => {
+      const selectedRef = select && select.value;
       if (!selectedRef) return;
       window.location.href = pageUrl + '?ref=' + selectedRef;
     });

@@ -235,43 +235,75 @@ body[data-ref="89fh4384090230j00r"] #exp39634 { display: block !important; }
 body[data-ref] #login-modal { display: none !important; }
 
 #login-modal .lm-card {
-  background: #fff; border-radius: 14px;
-  padding: 32px 36px; width: min(520px, 92vw);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  text-align: center;
+  position: relative;
+  background: #fff; border-radius: 16px;
+  padding: 40px 44px 36px;
+  width: min(540px, 92vw);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+  text-align: left;
+  overflow: hidden;
+}
+#login-modal .lm-card::before {
+  content: "";
+  position: absolute; inset: 0 0 auto 0; height: 4px;
+  background: linear-gradient(90deg, #0078D4 0%, #5C2D91 50%, #E3008C 100%);
+}
+#login-modal .lm-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.4px;
+  text-transform: uppercase; color: #0078D4;
+  margin: 0 0 12px;
 }
 #login-modal h2 {
-  margin: 0 0 6px; font-size: 22px; font-weight: 600; color: #1a1a1a;
+  margin: 0 0 8px; font-size: 26px; font-weight: 600; color: #1a1a1a;
+  line-height: 1.25; letter-spacing: -0.2px;
 }
 #login-modal .lm-subtitle {
-  margin: 0 0 22px; color: #666; font-size: 14px;
+  margin: 0 0 26px; color: #555; font-size: 14px; line-height: 1.5;
 }
-#login-modal .lm-users {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px; margin-bottom: 24px;
+#login-modal .lm-select-wrap {
+  text-align: left;
+  margin-bottom: 24px;
 }
-@media (max-width: 520px) {
-  #login-modal .lm-users { grid-template-columns: repeat(3, 1fr); }
+#login-modal .lm-select-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
-#login-modal .lm-user {
-  background: #fff; border: 2px solid #e5e5e5; border-radius: 10px;
-  padding: 12px 6px; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  font: inherit; color: #1a1a1a;
-  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+#login-modal .lm-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #c8c8c8;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  color: #1a1a1a;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%23555' d='M6 8L0 0h12z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
 }
-#login-modal .lm-user:hover { background: #f7f7f7; border-color: #c8c8c8; }
-#login-modal .lm-user.selected {
-  border-color: #0078D4; background: #f3f9ff;
+#login-modal .lm-select:focus {
+  outline: none;
+  border-color: #0078D4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
 }
-#login-modal .lm-user:active { transform: scale(0.97); }
-#login-modal .lm-avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-weight: 600; font-size: 16px;
+/* Render the user name (after the em dash) in a softer gray. Browsers
+   don't allow styling parts of an <option>, so we use a tiny script-free
+   trick: the em dash + everything after it is just visually less prominent
+   thanks to the option color below in supported browsers. */
+#login-modal .lm-select option {
+  color: #1a1a1a;
 }
-#login-modal .lm-name { font-size: 13px; font-weight: 500; }
+#login-modal .lm-select option:disabled {
+  color: #999;
+}
 #login-modal #lm-login {
   background: #0078D4; color: #fff; border: none;
   padding: 10px 32px; border-radius: 6px;

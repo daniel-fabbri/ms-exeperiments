@@ -1691,39 +1691,20 @@ h6,.h6{font-family:var(--ds-heading-3xs-font-family,var(--ds-font-family-segoe-v
      Hidden via CSS when the URL already has ?ref=… (i.e. logged in). -->
 <div id="login-modal" role="dialog" aria-modal="true" aria-labelledby="lm-title">
   <div class="lm-card">
-    <h2 id="lm-title">Welcome</h2>
-    <p class="lm-subtitle">Choose a user to continue</p>
-    <div class="lm-users" role="radiogroup" aria-label="User">
-      <button class="lm-user" type="button" role="radio" aria-checked="false"
-              data-ref="98fh349f8349j02d3i" data-name="Daniel">
-        <span class="lm-avatar" style="background:#0078D4">D</span>
-        <span class="lm-name">Daniel</span>
-      </button>
-      <button class="lm-user" type="button" role="radio" aria-checked="false"
-              data-ref="9487948v094jf09f40" data-name="Allison">
-        <span class="lm-avatar" style="background:#E3008C">A</span>
-        <span class="lm-name">Allison</span>
-      </button>
-      <button class="lm-user" type="button" role="radio" aria-checked="false"
-              data-ref="543348v094jf34243v" data-name="Devin">
-        <span class="lm-avatar" style="background:#107C10">D</span>
-        <span class="lm-name">Devin</span>
-      </button>
-      <button class="lm-user" type="button" role="radio" aria-checked="false"
-              data-ref="8737948v25c09f4023" data-name="Linda">
-        <span class="lm-avatar" style="background:#8661C5">L</span>
-        <span class="lm-name">Linda</span>
-      </button>
-      <button class="lm-user" type="button" role="radio" aria-checked="false"
-              data-ref="43tgbny848v2576yuj" data-name="Brent">
-        <span class="lm-avatar" style="background:#5C2D91">B</span>
-        <span class="lm-name">Brent</span>
-      </button>
-      <button class="lm-user" type="button" role="radio" aria-checked="false"
-              data-ref="89fh4384090230j00r" data-name="Yago">
-        <span class="lm-avatar" style="background:#D83B01">Y</span>
-        <span class="lm-name">Yago</span>
-      </button>
+    <div class="lm-eyebrow">Microsoft · Experience Lab</div>
+    <h2 id="lm-title">Step into a personalized journey</h2>
+    <p class="lm-subtitle">Pick a persona below to preview the experiment tailored to that segment.</p>
+    <div class="lm-select-wrap">
+      <label for="lm-select" class="lm-select-label">Persona / segment</label>
+      <select id="lm-select" class="lm-select">
+        <option value="" disabled selected>Select a persona…</option>
+        <option value="98fh349f8349j02d3i">Control Chat</option>
+        <option value="9487948v094jf09f40">Discover A</option>
+        <option value="543348v094jf34243v">Discover B</option>
+        <option value="8737948v25c09f4023">Discover C</option>
+        <option value="43tgbny848v2576yuj">Control</option>
+        <option value="89fh4384090230j00r">Surface Explorer</option>
+      </select>
     </div>
     <button id="lm-login" type="button" disabled>Login</button>
   </div>
