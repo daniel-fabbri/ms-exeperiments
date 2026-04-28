@@ -1,0 +1,194 @@
+/* =====================================================================
+   Experiment shell styles — header, sidebar, Ask-AI card, variant rules
+   ===================================================================== */
+
+/* ---------- Simple Microsoft-style header ---------- */
+#simple-header {
+  position: sticky; top: 0; z-index: 1000;
+  display: flex; align-items: center; gap: 32px;
+  padding: 0 24px 0 56px; height: 48px;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  font: 13px/1 "Segoe UI", system-ui, sans-serif;
+}
+#simple-header .sh-brand {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #000; text-decoration: none; font-weight: 600; font-size: 15px;
+}
+#simple-header .sh-nav { display: flex; gap: 20px; flex-wrap: wrap; }
+#simple-header .sh-nav a {
+  color: #000; text-decoration: none; padding: 4px 0;
+  border-bottom: 2px solid transparent;
+}
+#simple-header .sh-nav a:hover { border-bottom-color: #000; }
+@media (max-width: 768px) { #simple-header .sh-nav { display: none; } }
+
+/* Hide original microsoft.com header / promo banner */
+uhf-header, uhf-promo-banner { display: none !important; }
+
+/* ---------- Experiment sidebar (pure-CSS toggle via checkbox) ---------- */
+#exp-sidebar-toggle { position: absolute; opacity: 0; pointer-events: none; }
+
+#exp-toggle {
+  position: fixed; top: 50%; left: 0; transform: translateY(-50%);
+  width: 36px; height: 48px; z-index: 100001;
+  background: #0078D4; color: #fff;
+  border-radius: 0 6px 6px 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  transition: left 0.25s ease;
+}
+#exp-toggle:hover { background: #106ebe; }
+
+#exp-sidebar {
+  position: fixed; top: 0; left: 0; height: 100vh; width: 280px;
+  background: #fff; color: #1a1a1a;
+  border-right: 1px solid #e5e5e5;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  padding: 20px 24px; overflow-y: auto;
+  font: 14px/1.5 "Segoe UI", system-ui, sans-serif;
+  transform: translateX(-100%); transition: transform 0.25s ease;
+  z-index: 100000;
+}
+#exp-sidebar-toggle:checked ~ #exp-sidebar { transform: translateX(0); }
+#exp-sidebar-toggle:checked ~ #exp-toggle { left: 280px; }
+
+#exp-sidebar h3 {
+  margin: 0 0 12px; font-size: 18px; font-weight: 600;
+  padding-bottom: 8px; border-bottom: 1px solid #eee;
+}
+#exp-sidebar h4 {
+  margin: 16px 0 8px; font-size: 13px; font-weight: 600;
+  color: #555; text-transform: uppercase; letter-spacing: 0.5px;
+}
+#exp-sidebar ul { list-style: none; padding: 0; margin: 0; }
+#exp-sidebar li { margin: 4px 0; }
+#exp-sidebar a {
+  display: block; padding: 8px 12px; border-radius: 4px;
+  color: #1a1a1a; text-decoration: none;
+  transition: background 0.15s;
+}
+#exp-sidebar a:hover { background: #f3f3f3; }
+#exp-sidebar a.active {
+  background: #0078D4; color: #fff; font-weight: 600;
+}
+
+/* ---------- Ask-AI card (Discover A/B/C) ---------- */
+#ask-card {
+  display: none;                   /* hidden by default */
+  position: fixed; right: 20px; bottom: 20px; z-index: 99998;
+  width: 340px; background: #fff;
+  border-radius: 16px; padding: 14px 14px 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  border: 1px solid #e5e5e5;
+  font: 14px/1.4 "Segoe UI", system-ui, sans-serif;
+  color: #1a1a1a;
+}
+#ask-card .ac-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 10px;
+}
+#ask-card .ac-heading {
+  font-size: 15px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+}
+#ask-card .ac-ask {
+  background: #1a1a1a; color: #fff; border: none;
+  padding: 6px 14px; border-radius: 16px; font: inherit;
+  cursor: pointer; white-space: nowrap;
+}
+#ask-card .ac-ask:hover { background: #000; }
+
+#ask-card .ac-chips { display: none; flex-wrap: wrap; gap: 6px; }
+#ask-card .ac-chip {
+  background: #fff; border: 1px solid #d1d1d1; color: #1a1a1a;
+  padding: 6px 12px; border-radius: 16px; font: inherit;
+  cursor: pointer; transition: background 0.15s;
+}
+#ask-card .ac-chip:hover { background: #f3f3f3; }
+
+#ask-card .ac-input-row {
+  display: none;
+  margin-top: 10px; align-items: center; gap: 6px;
+  border: 1px solid #d1d1d1; border-radius: 22px;
+  padding: 6px 8px 6px 14px; background: #fafafa;
+}
+#ask-card .ac-input {
+  flex: 1; border: none; background: transparent; outline: none;
+  font: inherit; color: #1a1a1a;
+}
+#ask-card .ac-input::placeholder { color: #888; }
+#ask-card .ac-send {
+  background: transparent; border: none; cursor: pointer;
+  color: #888; padding: 4px; display: flex; align-items: center;
+}
+#ask-card .ac-send:hover { color: #0078D4; }
+
+#ask-card .ac-avatar {
+  position: absolute; right: -6px; bottom: -6px;
+  width: 36px; height: 36px; border-radius: 50%; overflow: hidden;
+  border: 2px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+#ask-card .ac-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+#ask-card .ac-close {
+  position: absolute; top: 6px; right: 8px;
+  background: transparent; border: none; cursor: pointer;
+  font-size: 18px; color: #666; line-height: 1; padding: 2px 6px;
+}
+#ask-card .ac-close:hover { color: #000; }
+
+/* ---------- Variant routing (driven by body[data-ref]) ----------------
+   Chat copy variants                                                     */
+
+/* Show Ask-AI card for the 3 Discover variants */
+body[data-ref="9487948v094jf09f40"] #ask-card,
+body[data-ref="543348v094jf34243v"] #ask-card,
+body[data-ref="8737948v25c09f4023"] #ask-card { display: block; }
+
+/* Hide the page's default chat pill while a Discover card is showing */
+body[data-ref="9487948v094jf09f40"]:not([data-card-closed]) .sa-default-entry-container,
+body[data-ref="543348v094jf34243v"]:not([data-card-closed]) .sa-default-entry-container,
+body[data-ref="8737948v25c09f4023"]:not([data-card-closed]) .sa-default-entry-container {
+  display: none !important;
+}
+
+/* User dismissed the card → hide it (the pill returns automatically) */
+body[data-card-closed] #ask-card { display: none !important; }
+
+/* Per-variant chip groups */
+body[data-ref="9487948v094jf09f40"] #ask-card .ac-chips-a { display: flex; }
+body[data-ref="543348v094jf34243v"] #ask-card .ac-chips-b { display: flex; }
+
+/* Per-variant input row (B and C only) */
+body[data-ref="543348v094jf34243v"] #ask-card .ac-input-row,
+body[data-ref="8737948v25c09f4023"] #ask-card .ac-input-row { display: flex; }
+
+/* Control chat: force the "Can we help you?" highlight popover visible
+   and hide the small "Need help?" pill so only the popover appears.
+   The original site uses `.is-hidden` to slide the inner content & image
+   off-screen with `transform: translateX(100%)`, so we must cancel that
+   on the inner elements (not the container itself). */
+body[data-ref="98fh349f8349j02d3i"] .sa-highlight-entry-container,
+body[data-ref="98fh349f8349j02d3i"] .sa-highlight-entry-container.is-hidden {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+body[data-ref="98fh349f8349j02d3i"] .sa-highlight-entry-container.is-hidden .sa-highlight-entry-content,
+body[data-ref="98fh349f8349j02d3i"] .sa-highlight-entry-container.is-hidden .sa-highlight-entry-image,
+body[data-ref="98fh349f8349j02d3i"] .sa-highlight-entry-container .sa-highlight-entry-content,
+body[data-ref="98fh349f8349j02d3i"] .sa-highlight-entry-container .sa-highlight-entry-image {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(0) !important;
+}
+body[data-ref="98fh349f8349j02d3i"] .sa-default-entry-container {
+  display: none !important;
+}
+
+/* Decision module is injected dynamically by an inline script in the page.
+   Hide it by default; show only on the Surface Explorer variant. */
+#exp39634 { display: none !important; }
+body[data-ref="89fh4384090230j00r"] #exp39634 { display: block !important; }
