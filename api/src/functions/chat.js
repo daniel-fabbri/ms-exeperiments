@@ -42,7 +42,6 @@ app.http('chat', {
     const agentVersion = process.env.AZURE_AGENT_VERSION || '1';
 
     try {
-      const token = await getToken();
       const url = `${endpoint.replace(/\/$/, '')}/openai/v1/responses`;
       const payload = {
         agent_reference: {
@@ -56,12 +55,18 @@ app.http('chat', {
       };
       if (previousResponseId) payload.previous_response_id = previousResponseId;
 
+      const apiKey = process.env.AZURE_AIPROJECT_API_KEY;
+      const headers = { 'Content-Type': 'application/json' };
+      if (apiKey) {
+        headers['api-key'] = apiKey;
+      } else {
+        const token2 = await getToken();
+        headers.Authorization = `Bearer ${token2}`;
+      }
+
       const res = await fetch(url, {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(payload),
       });
 
